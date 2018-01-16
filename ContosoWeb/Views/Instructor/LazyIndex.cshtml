@@ -142,6 +142,18 @@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
+    foreach (var dep in item.Departments.ToList())
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => dep.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => dep.Name)
+            </td>
+
+        </tr>
+    }
 }
 
 </table>

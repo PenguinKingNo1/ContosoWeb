@@ -13,15 +13,14 @@ namespace ContosoWeb.Data
         {
         }
 
-        public new IEnumerable<Instructor> GetAll()
+        public IEnumerable<Instructor> EagerGetAll()
         {
-            return _context.Instructors.ToList(); //.Include("Departments").ToList();  // eager loading
+            return _context.Instructors.Include("Departments").ToList();  // eager loading
         }
-
     }
 
     public interface IInstructorRepository : IRepository<Instructor>
     {
-
+        IEnumerable<Instructor> EagerGetAll();
     }
 }
