@@ -3,51 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ContosoWeb.Models;
-using ContosoWeb.Services;
 
 namespace ContosoWeb.Controllers
 {
-    public class InstructorController : Controller
+    public class CourseController : Controller
     {
-        private readonly IInstructorService _service;
-        public InstructorController(IInstructorService service)
-        {
-            _service = service;
-        }
-        // GET: Instructor
+        // GET: Course
         public ActionResult Index()
         {
-            var all = _service.EagerGetAll();
-            return View(all);
+            return View();
         }
 
-        public ActionResult LazyIndex()
-        {
-            var all = _service.GetAllInstructors();
-            return View("Index", all);
-        }
-
-        // GET: Instructor/Details/5
+        // GET: Course/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Instructor/Create
+        // GET: Course/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Instructor/Create
+        // POST: Course/Create
         [HttpPost]
-        public ActionResult Create(Instructor instructor)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                _service.AddInstructor(instructor);
+
                 return RedirectToAction("Index");
             }
             catch
@@ -56,13 +42,13 @@ namespace ContosoWeb.Controllers
             }
         }
 
-        // GET: Instructor/Edit/5
+        // GET: Course/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Instructor/Edit/5
+        // POST: Course/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -78,13 +64,13 @@ namespace ContosoWeb.Controllers
             }
         }
 
-        // GET: Instructor/Delete/5
+        // GET: Course/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Instructor/Delete/5
+        // POST: Course/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
