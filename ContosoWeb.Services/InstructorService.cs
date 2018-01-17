@@ -39,6 +39,11 @@ namespace ContosoWeb.Services
         {
             return _repository.GetById(id);
         }
+
+        public IEnumerable<Instructor> EagerGetAll()
+        {
+            return _repository.EagerGetAll();
+        }
     }
 
     public interface IInstructorService
@@ -48,5 +53,6 @@ namespace ContosoWeb.Services
         void EditInstructor(Instructor instructor);
         Instructor GetInstructorById(int id);
         IEnumerable<Instructor> GetAllInstructors();
+        IEnumerable<Instructor> EagerGetAll();
     }
 }

@@ -18,15 +18,14 @@ namespace ContosoWeb.Controllers
         // GET: Instructor
         public ActionResult Index()
         {
-            return View(_service.GetAllInstructors());
+            var list = _service.GetAllInstructors();
+            return View(list);
         }
 
-        public ActionResult LazyIndex()
+        public ActionResult EagerIndex()
         {
-            List<Instructor> instList = _service.GetAllInstructors().ToList();
-            Instructor instructor = instList[0];
-            List<Department> depList = instructor.Departments.ToList();
-            return View(depList);
+            var list = _service.EagerGetAll();
+            return View(list);
         }
 
         // GET: Instructor/Details/5

@@ -11,7 +11,7 @@ namespace ContosoWeb.Models
     public class Instructor : People
     {
         public DateTime? HireDate { get; set; }
-        public ICollection<Department> Departments { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }
