@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ContosoWeb.Data;
+using ContosoWeb.Services;
 
 namespace ContosoWeb.Controllers
 {
-
     public class CourseController : Controller
     {
+        private readonly ICourseService _service;
+        public CourseController(ICourseService service)
+        {
+            service = _service;
+        }
         // GET: Course
         public ActionResult Index()
         {
-            return View();
+            return View(_service.GetAllCourses());
         }
 
         // GET: Course/Details/5
