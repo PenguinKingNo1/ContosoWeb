@@ -14,7 +14,7 @@ namespace ContosoWeb.Models
         public string Title { get; set; }
         public int Credits { get; set; }
         public int DepartmentId { get; set; }
-        public Department Department { get; set; }
-        public ICollection<Instructor> Instructor { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual ICollection<Instructor> Instructor { get; set; }
     }
 }
