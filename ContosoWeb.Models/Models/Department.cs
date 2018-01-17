@@ -12,8 +12,8 @@ namespace ContosoWeb.Models
         public string Name { get; set; }
         public Decimal Budget { get; set; }
         public DateTime? StartDate { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
         public int InstructorId { get; set; }
-        public Instructor Instructor { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 }
