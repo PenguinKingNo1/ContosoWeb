@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ContosoWeb.Data;
+using ContosoWeb.Models;
 using ContosoWeb.Services;
 
 namespace ContosoWeb.Controllers
@@ -13,7 +14,7 @@ namespace ContosoWeb.Controllers
         private readonly ICourseService _service;
         public CourseController(ICourseService service)
         {
-            service = _service;
+            _service = service;
         }
         // GET: Course
         public ActionResult Index()
@@ -30,17 +31,19 @@ namespace ContosoWeb.Controllers
         // GET: Course/Create
         public ActionResult Create()
         {
+            var depList = new DepartmentService(new DepartmentRepository(new ContosoDbContext())).GetAllDepartment();
+            ViewBag.DepartmentId = depList.Select(dep => new SelectListItem(){Text=dep.Name, Value=dep.Id.ToString()});
             return View();
         }
 
         // POST: Course/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Course course)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                _service.AddCourse(course);
                 return RedirectToAction("Index");
             }
             catch
@@ -74,17 +77,17 @@ namespace ContosoWeb.Controllers
         // GET: Course/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_service.GetCourseById(id));
         }
 
         // POST: Course/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Course course)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                _service.DeleteCourse(course);
                 return RedirectToAction("Index");
             }
             catch

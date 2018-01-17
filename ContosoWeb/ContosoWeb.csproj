@@ -239,6 +239,7 @@
     <Content Include="Views\Department\Create.cshtml" />
     <Content Include="Views\Instructor\LazyIndex.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
