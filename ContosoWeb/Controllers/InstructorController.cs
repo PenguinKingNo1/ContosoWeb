@@ -11,9 +11,11 @@ namespace ContosoWeb.Controllers
     public class InstructorController : Controller
     {
         private readonly IInstructorService _service;
-        public InstructorController(IInstructorService service)
+        private readonly IPersonService _personService;
+        public InstructorController(IInstructorService service, IPersonService personService)
         {
             _service = service;
+            _personService = personService;
         }
         // GET: Instructor
         public ActionResult Index()
@@ -46,7 +48,8 @@ namespace ContosoWeb.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                // TODO: Add insert logic here   
+                _personService.AddPerson(instructor);
                 _service.AddInstructor(instructor);
                 return RedirectToAction("Index");
             }
