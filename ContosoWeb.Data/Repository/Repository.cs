@@ -25,6 +25,7 @@ namespace ContosoWeb.Data
         public void Delete(T entity)
         {
             dbSet.Remove(entity);
+            _context.Entry(entity).State = EntityState.Deleted;
         }
 
         public T Get(Expression<Func<T, bool>> where)

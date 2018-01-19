@@ -12,9 +12,11 @@ namespace ContosoWeb.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseService _service;
+        private List<Department> depList;
         public CourseController(ICourseService service)
         {
             _service = service;
+            depList = new DepartmentService(new DepartmentRepository(new ContosoDbContext())).GetAllDepartment().ToList();
         }
         // GET: Course
         public ActionResult Index()
@@ -31,7 +33,6 @@ namespace ContosoWeb.Controllers
         // GET: Course/Create
         public ActionResult Create()
         {
-            var depList = new DepartmentService(new DepartmentRepository(new ContosoDbContext())).GetAllDepartment();
             ViewBag.DepartmentId = depList.Select(dep => new SelectListItem(){Text=dep.Name, Value=dep.Id.ToString()});
             return View();
         }
@@ -55,17 +56,18 @@ namespace ContosoWeb.Controllers
         // GET: Course/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.DepartmentId = depList.Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.Id.ToString() });
+            return View(_service.GetCourseById(id));
         }
 
         // POST: Course/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Course course)
         {
             try
             {
                 // TODO: Add update logic here
-
+                _service.EditCourse(course);
                 return RedirectToAction("Index");
             }
             catch
