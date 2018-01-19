@@ -89,7 +89,7 @@ namespace ContosoWeb.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _service.DeleteCourse(course);
+                _service.DeleteCourse(_service.GetCourseById(course.Id));
                 return RedirectToAction("Index");
             }
             catch

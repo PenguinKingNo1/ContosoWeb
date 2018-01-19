@@ -11,9 +11,11 @@ namespace ContosoWeb.Controllers
     public class DepartmentController : Controller
     {
         private readonly IDepartmentService _service;
-        public DepartmentController(IDepartmentService service)
+        private readonly IInstructorService _instructorService;
+        public DepartmentController(IDepartmentService service, IInstructorService instructorService)
         {
             _service = service;
+            _instructorService = instructorService;
         }
         // GET: Department
         public ActionResult Index()
@@ -30,6 +32,8 @@ namespace ContosoWeb.Controllers
         // GET: Department/Create
         public ActionResult Create()
         {
+            ViewBag.InstructorId = _instructorService.GetAllInstructors().Select
+                (inst => new SelectListItem() { Text = inst.FirstName + inst.LastName, Value = inst.Id.ToString() });
             return View();
         }
 
@@ -52,17 +56,19 @@ namespace ContosoWeb.Controllers
         // GET: Department/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.InstructorId = _instructorService.GetAllInstructors().Select
+            (inst => new SelectListItem() { Text = inst.FirstName + inst.LastName, Value = inst.Id.ToString()});
+            return View(_service.GetDepartmentById(id));
         }
 
         // POST: Department/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Department dep)
         {
             try
             {
                 // TODO: Add update logic here
-
+                _service.EditDepartment(dep);
                 return RedirectToAction("Index");
             }
             catch
@@ -74,17 +80,17 @@ namespace ContosoWeb.Controllers
         // GET: Department/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_service.GetDepartmentById(id));
         }
 
         // POST: Department/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Course course)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                _service.DeleteDepartment(_service.GetDepartmentById(course.Id));
                 return RedirectToAction("Index");
             }
             catch
