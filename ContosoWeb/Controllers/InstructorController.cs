@@ -48,7 +48,7 @@ namespace ContosoWeb.Controllers
         {
             try
             {
-                // TODO: Add insert logic here   
+                // TODO: Add insert logic here   /
                 _personService.AddPerson(instructor);
                 _service.AddInstructor(instructor);
                 return RedirectToAction("Index");
@@ -62,17 +62,18 @@ namespace ContosoWeb.Controllers
         // GET: Instructor/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_service.GetInstructorById(id));
         }
 
         // POST: Instructor/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Instructor instructor)
         {
             try
             {
                 // TODO: Add update logic here
-
+                _personService.EditPerson(instructor);
+                _service.EditInstructor(instructor);
                 return RedirectToAction("Index");
             }
             catch
@@ -84,17 +85,18 @@ namespace ContosoWeb.Controllers
         // GET: Instructor/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_service.GetInstructorById(id));
         }
 
         // POST: Instructor/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Instructor instructor)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                _personService.DeletePerson(_personService.GetPersonById(instructor.Id));
+                _service.DeleteInstructor(instructor);
                 return RedirectToAction("Index");
             }
             catch

@@ -68,7 +68,6 @@ namespace Contoso.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // Repositories
-
             kernel.Bind<IStudentRepository>().To<StudentRepository>();
             kernel.Bind<IPersonRepository>().To<PersonRepository>();
             kernel.Bind<IInstructorRepository>().To<InstructorRepository>();

@@ -12,11 +12,11 @@ namespace ContosoWeb.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseService _service;
-        private List<Department> depList;
-        public CourseController(ICourseService service)
+        private readonly IDepartmentService _departmentService;
+        public CourseController(ICourseService service, IDepartmentService departmentService)
         {
             _service = service;
-            depList = new DepartmentService(new DepartmentRepository(new ContosoDbContext())).GetAllDepartment().ToList();
+            _departmentService = departmentService;
         }
         // GET: Course
         public ActionResult Index()
@@ -33,6 +33,7 @@ namespace ContosoWeb.Controllers
         // GET: Course/Create
         public ActionResult Create()
         {
+            var depList = _departmentService.GetAllDepartment();
             ViewBag.DepartmentId = depList.Select(dep => new SelectListItem(){Text=dep.Name, Value=dep.Id.ToString()});
             return View();
         }
@@ -56,6 +57,7 @@ namespace ContosoWeb.Controllers
         // GET: Course/Edit/5
         public ActionResult Edit(int id)
         {
+            var depList = _departmentService.GetAllDepartment();
             ViewBag.DepartmentId = depList.Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.Id.ToString() });
             return View(_service.GetCourseById(id));
         }
