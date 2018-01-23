@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using ContosoWeb.Models;
 using ContosoWeb.Services;
+using ContosoWeb.ViewModels;
+using Newtonsoft.Json;
+using System.Web.Security;
 
 namespace ContosoWeb.Controllers
 {
@@ -91,6 +94,52 @@ namespace ContosoWeb.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: 
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var person = _personService.GetValidPerson(loginViewModel.Username, loginViewModel.Password);
+
+                    if (person != null)
+                    {
+                        var personRoles = person.Roles.Select(r => r.RoleName).ToArray();
+                        var serializeModel = new ContosoPrincipleModel
+                        {
+                            PersonId = person.Id,
+                            FirstName = person.FirstName,
+                            LastName = person.LastName,
+                            Roles = personRoles
+                        };
+
+                        var userData = JsonConvert.SerializeObject(serializeModel);
+                        // using System.Web.Security
+                        var authTicket = new FormsAuthenticationTicket(1, person.Email, DateTime.Now, DateTime.Now.AddMinutes(15), false, userData);
+                        // no algorithm to choose from
+                        var encTicket = FormsAuthentication.Encrypt(authTicket);
+                        //
+                        var faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                        Response.Cookies.Add(faCookie);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
         }
     }
 }

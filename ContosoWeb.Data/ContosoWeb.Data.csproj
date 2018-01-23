@@ -80,6 +80,7 @@
     <Compile Include="Repository\PersonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />
   </ItemGroup>
   <ItemGroup>

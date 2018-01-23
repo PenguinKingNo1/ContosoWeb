@@ -11,6 +11,6 @@ namespace ContosoWeb.Models
     {
         public string RoleName { get; set; }
         public string Desciprtion { get; set; }
-        public ICollection<People> People { get; set; }
+        public virtual ICollection<People> People { get; set; }
     }
 }

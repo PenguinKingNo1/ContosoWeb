@@ -6,18 +6,22 @@ using System.Web.Mvc;
 using ContosoWeb.Data;
 using ContosoWeb.Models;
 using ContosoWeb.Services;
+using ContosoWeb.Infrastructure;
 
 namespace ContosoWeb.Controllers
 {
+    [AdminAuthorize]
     public class StudentController : Controller
     {
+        private readonly IStudentService _studentService;
+        public StudentController(IStudentService studentService)
+        {
+            _studentService = studentService;
+        }
         // GET: Student
         public ActionResult Index()
         {
-            ContosoDbContext ctx = new ContosoDbContext();
-            var studentRepository = new StudentRepository(ctx);
-            var studentService = new StudentService(studentRepository);
-            return View(studentService.GetAllStudents());
+            return View(_studentService.GetAllStudents());
         }
 
         // GET: Student/Details/5

@@ -45,7 +45,10 @@ namespace ContosoWeb.Services
             return _repository.GetById(id);
         }
 
-
+        public People GetValidPerson(string username, string pwd)
+        {
+            return _repository.Get(p => p.Email == username && p.Password == pwd);
+        }
     }
 
     public interface IPersonService
@@ -55,5 +58,6 @@ namespace ContosoWeb.Services
         People GetPersonById(int id);
         void EditPerson(People people);
         void DeletePerson(People people);
+        People GetValidPerson(string username, string pwd);
     }
 }

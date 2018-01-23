@@ -12,10 +12,12 @@ namespace ContosoWeb.Controllers
     {
         private readonly IInstructorService _service;
         private readonly IPersonService _personService;
-        public InstructorController(IInstructorService service, IPersonService personService)
+        private readonly IRoleService _roleService;
+        public InstructorController(IInstructorService service, IPersonService personService, IRoleService roleService)
         {
             _service = service;
             _personService = personService;
+            _roleService = roleService;
         }
         // GET: Instructor
         public ActionResult Index()
@@ -62,6 +64,8 @@ namespace ContosoWeb.Controllers
         // GET: Instructor/Edit/5
         public ActionResult Edit(int id)
         {
+            var roleList = _roleService.GetAllRoles();
+            ViewBag.RoleId = roleList.Select(r => new SelectListItem() { Text = r.RoleName, Value = r.Id.ToString() });
             return View(_service.GetInstructorById(id));
         }
 

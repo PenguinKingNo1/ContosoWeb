@@ -24,6 +24,6 @@ namespace ContosoWeb.Models
         public string Password { get; set; }
         public string Salt { get; set; }
         public Byte? IsLocked { get; set; }
-        public ICollection<Roles> Roles { get; set; }
+        public virtual ICollection<Roles> Roles { get; set; }
     }
 }
