@@ -10,7 +10,7 @@ using ContosoWeb.Infrastructure;
 
 namespace ContosoWeb.Controllers
 {
-    [AdminAuthorize]
+    [RoleAuthorize(AuthorizeRole.Administrator,AuthorizeRole.Student)]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;

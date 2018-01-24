@@ -11,12 +11,12 @@ namespace ContosoWeb.Infrastructure
         
         public ContosoWebPrincipal(string username)
         {
-            this.Identity = new GenericIdentity(username); //what is this?
+            Identity = new GenericIdentity(username); //what is this?
         }
 
         public bool IsInRole(string role)
         {
-            return Roles.Any(r => r.Contains(role));
+            return Roles.Any(r => role.Contains(r));
         }
         public IIdentity Identity { get; private set; } //???
         public string UserName { get; private set; }
