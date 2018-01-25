@@ -35,6 +35,17 @@ namespace ContosoWeb.Services
             _repository.Delete(student);
             _repository.SaveChanges();
         }
+
+        public IEnumerable<Course> GetEnrolledCourses(int id)
+        {
+            var enrollmentList = _repository.GetById(id).Enrollments;
+            var courseList = new List<Course>();
+            foreach (var enroll in enrollmentList)
+            {
+                courseList.Add(enroll.Course);
+            }
+            return courseList;
+        }
     }
 
     public interface IStudentService
@@ -43,5 +54,6 @@ namespace ContosoWeb.Services
         IEnumerable<Student> GetAllStudents();
         void AddStudent(Student student);
         void DeleteStudent(Student student);
+        IEnumerable<Course> GetEnrolledCourses(int id);
     }
 }

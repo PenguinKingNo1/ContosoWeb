@@ -15,10 +15,12 @@ namespace ContosoWeb.Controllers
     {
         private readonly IStudentService _studentService;
         private readonly IPersonService _personService;
-        public StudentController(IStudentService studentService, IPersonService personService)
+        private readonly ICourseService _courseService;
+        public StudentController(IStudentService studentService, IPersonService personService, ICourseService courseService)
         {
             _studentService = studentService;
             _personService = personService;
+            _courseService = courseService;
         }
         // GET: Student
         public ActionResult Index()
@@ -91,6 +93,21 @@ namespace ContosoWeb.Controllers
             {
                 _studentService.DeleteStudent(_studentService.GetStudentById(student.Id));             
                 return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult PersonalHome()
+        {
+            try
+            {
+                var studentInfo = System.Web.HttpContext.Current.User as ContosoWebPrincipal;
+                var studentId = studentInfo.PersonId;
+
+                return View(_studentService.GetEnrolledCourses(studentId));
             }
             catch
             {

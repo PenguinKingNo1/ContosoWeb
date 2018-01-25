@@ -31,6 +31,16 @@ namespace ContosoWeb.Services
         {
             return _enrollmentRepository.GetById(id);
         }
+
+        public Course GetEnrolledCourse(int enrollId)
+        {
+            return _enrollmentRepository.GetById(enrollId).Course;
+        }
+
+        public Student GetEnrolledStudent(int enrollId)
+        {
+            return _enrollmentRepository.GetById(enrollId).Student;
+        }
     }
 
     public interface IEnrollmentService
@@ -38,5 +48,7 @@ namespace ContosoWeb.Services
         void AddEnrollment(Enrollment enrollment);
         void DeleteEnrollment(Enrollment enrollment);
         Enrollment GetEnrollmentById(int id);
+        Course GetEnrolledCourse(int enrollId);
+        Student GetEnrolledStudent(int enrollId);
     }
 }

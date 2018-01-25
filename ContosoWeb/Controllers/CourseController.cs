@@ -34,6 +34,12 @@ namespace ContosoWeb.Controllers
             return View(_service.GetAllCourses());
         }
 
+        // GET: Course
+        public ActionResult Index(int id)
+        {
+            return View(_studentService.GetStudentById(id).Enrollments);
+        }
+
         // GET: Course/Details/5
         public ActionResult Details(int id)
         {
