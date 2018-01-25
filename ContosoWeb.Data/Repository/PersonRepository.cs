@@ -13,6 +13,12 @@ namespace ContosoWeb.Data
         {
         }
 
+        public void AddRole(int personId, int roleId)
+        {
+            var role = _context.Roles.Find(roleId);
+            dbSet.Find(personId).Roles.Add(role);
+        }
+
         public People GetByLastName(string lastName)
         {
             var person = _context.People.Where(p => p.LastName == lastName).FirstOrDefault();
@@ -24,5 +30,6 @@ namespace ContosoWeb.Data
     public interface IPersonRepository : IRepository<People>
     {
         People GetByLastName(string lastName);
+        void AddRole(int personId, int roleId);
     }
 }

@@ -1,0 +1,68 @@
+﻿@model ContosoWeb.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+@using (Html.BeginForm("Enroll","Course", FormMethod.Post))
+{
+    <div>
+        <h4>Course</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @Html.HiddenFor(model => model.Id);
+            <dt>
+                @Html.DisplayNameFor(model => model.Department.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Department.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Credits)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Credits)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Department)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Department.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Instructors)
+            </dt>
+
+            @foreach (var item in Model.Instructors)
+            {
+                <dd>
+                    @Html.DisplayFor(model => item.FirstName)
+                </dd>
+            }
+
+
+        </dl>
+        <input type="submit" value="Enroll" class="btn btn-default" />
+    </div>
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -23,11 +23,13 @@ namespace ContosoWeb.Services
         public void DeleteInstructor(Instructor instructor)
         {
             _repository.Delete(instructor);
+            _repository.SaveChanges();
         }
 
         public void EditInstructor(Instructor instructor)
         {
             _repository.Update(instructor);
+            _repository.SaveChanges();
         }
 
         public IEnumerable<Instructor> GetAllInstructors()
@@ -44,6 +46,11 @@ namespace ContosoWeb.Services
         {
             return _repository.EagerGetAll();
         }
+        public void AddMoreCourses(int instId, int courseId)
+        {
+            _repository.AddMoreCourse(instId, courseId);
+            _repository.SaveChanges();
+        }
     }
 
     public interface IInstructorService
@@ -54,5 +61,6 @@ namespace ContosoWeb.Services
         Instructor GetInstructorById(int id);
         IEnumerable<Instructor> GetAllInstructors();
         IEnumerable<Instructor> EagerGetAll();
+        void AddMoreCourses(int instId, int courseId);
     }
 }

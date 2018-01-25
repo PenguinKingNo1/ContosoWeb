@@ -74,6 +74,7 @@ namespace Contoso.App_Start
             kernel.Bind<IDepartmentRepository>().To<DepartmentRepository>();
             kernel.Bind<ICourseRepository>().To<CourseRepository>();
             kernel.Bind<IRoleRepository>().To<RoleRepository>();
+            kernel.Bind<IEnrollmentRepository>().To<EnrollmentRepository>();
 
             //Services
             kernel.Bind<IStudentService>().To<StudentService>();
@@ -82,6 +83,7 @@ namespace Contoso.App_Start
             kernel.Bind<IDepartmentService>().To<DepartmentService>();
             kernel.Bind<ICourseService>().To<CourseService>();
             kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<IEnrollmentService>().To<EnrollmentService>();
         }
     }
 }

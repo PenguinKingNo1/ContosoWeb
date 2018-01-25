@@ -14,9 +14,11 @@ namespace ContosoWeb.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
-        public StudentController(IStudentService studentService)
+        private readonly IPersonService _personService;
+        public StudentController(IStudentService studentService, IPersonService personService)
         {
             _studentService = studentService;
+            _personService = personService;
         }
         // GET: Student
         public ActionResult Index()
@@ -38,12 +40,15 @@ namespace ContosoWeb.Controllers
 
         // POST: Student/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Student student)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                student.EnrollmentDate = DateTime.Now;
+                _personService.AddPerson(student);                
+                _studentService.AddStudent(student);
+                _personService.AddRole(student.Id, AuthorizeRole.StudentId);
                 return RedirectToAction("Index");
             }
             catch
@@ -77,17 +82,16 @@ namespace ContosoWeb.Controllers
         // GET: Student/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_studentService.GetStudentById(id));
         }
 
         // POST: Student/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Student student)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                _studentService.DeleteStudent(_studentService.GetStudentById(student.Id));             
                 return RedirectToAction("Index");
             }
             catch

@@ -13,6 +13,12 @@ namespace ContosoWeb.Data
         {
         }
 
+        public void AddMoreCourse(int instId, int courseId)
+        {
+            var course = _context.Courses.Find(courseId);
+            dbSet.Find(instId).Courses.Add(course);
+        }
+
         public IEnumerable<Instructor> EagerGetAll()
         {
             return _context.Instructors.Include("Departments").ToList();  // eager loading
@@ -23,5 +29,6 @@ namespace ContosoWeb.Data
     public interface IInstructorRepository : IRepository<Instructor>
     {
         IEnumerable<Instructor> EagerGetAll();
+        void AddMoreCourse(int instId, int courseId);
     }
 }

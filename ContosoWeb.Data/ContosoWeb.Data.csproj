@@ -64,12 +64,9 @@
     <Compile Include="Migrations\201801152203186_CompositeBtnPeopleRoles.Designer.cs">
       <DependentUpon>201801152203186_CompositeBtnPeopleRoles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801191611415_ConfigInstMapping.cs" />
-    <Compile Include="Migrations\201801191611415_ConfigInstMapping.Designer.cs">
-      <DependentUpon>201801191611415_ConfigInstMapping.cs</DependentUpon>
-    </Compile>
     <Compile Include="Repository\CourseRepository.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\EnrollmentRepository.cs" />
     <Compile Include="Repository\InstructorRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Migrations\201801152025407_InitialDb.cs" />
@@ -108,9 +105,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801152203186_CompositeBtnPeopleRoles.resx">
       <DependentUpon>201801152203186_CompositeBtnPeopleRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801191611415_ConfigInstMapping.resx">
-      <DependentUpon>201801191611415_ConfigInstMapping.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

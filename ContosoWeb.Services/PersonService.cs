@@ -49,6 +49,13 @@ namespace ContosoWeb.Services
         {
             return _repository.Get(p => p.Email == username && p.Password == pwd);
         }
+
+        public void AddRole(int personId, int roleId)
+        {
+            var updatedRepository = new PersonRepository(new ContosoDbContext());
+            updatedRepository.AddRole(personId, roleId);
+            updatedRepository.SaveChanges();
+        }
     }
 
     public interface IPersonService
@@ -59,5 +66,6 @@ namespace ContosoWeb.Services
         void EditPerson(People people);
         void DeletePerson(People people);
         People GetValidPerson(string username, string pwd);
+        void AddRole(int personId, int roleId);
     }
 }

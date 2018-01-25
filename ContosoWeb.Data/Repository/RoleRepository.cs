@@ -16,6 +16,5 @@ namespace ContosoWeb.Data
     }
     public interface IRoleRepository: IRepository<Roles>
     {
-
     }
 }

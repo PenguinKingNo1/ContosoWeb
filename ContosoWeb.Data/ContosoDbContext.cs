@@ -12,13 +12,13 @@ namespace ContosoWeb.Data
     {
         public ContosoDbContext() : base("name = ContosoDbContext")//
         {
-            this.Configuration.LazyLoadingEnabled = true;
+            Configuration.LazyLoadingEnabled = true;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Instructor>().Map(m => m.ToTable("Instructors"));
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Instructor>().Map(m => m.ToTable("Instructors"));
+        //}
         public virtual DbSet<People> People { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Course> Courses { get; set; }

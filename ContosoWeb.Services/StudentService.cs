@@ -29,6 +29,12 @@ namespace ContosoWeb.Services
         {
             return _repository.GetById(id);
         }
+
+        public void DeleteStudent(Student student)
+        {
+            _repository.Delete(student);
+            _repository.SaveChanges();
+        }
     }
 
     public interface IStudentService
@@ -36,5 +42,6 @@ namespace ContosoWeb.Services
         Student GetStudentById(int id);
         IEnumerable<Student> GetAllStudents();
         void AddStudent(Student student);
+        void DeleteStudent(Student student);
     }
 }
