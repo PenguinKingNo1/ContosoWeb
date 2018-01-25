@@ -117,10 +117,7 @@ namespace ContosoWeb.Controllers
                 var student = System.Web.HttpContext.Current.User as ContosoWebPrincipal;
                 var enrollment = new Enrollment();
                 enrollment.CourseId = Convert.ToInt32(id);
-                enrollment.StudentId = 1;
-                //enrollment.Student = _studentService.GetStudentById(1);
-                //enrollment.Course = _courseService.GetCourseById(Convert.ToInt32(id));
-                //enrollment.CreatedDate = DateTime.Now;
+                enrollment.StudentId = student.PersonId;
                 _enrollmentService.AddEnrollment(enrollment);
                 return RedirectToAction("Index");
             }

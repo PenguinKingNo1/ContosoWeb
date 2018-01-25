@@ -44,7 +44,6 @@ namespace ContosoWeb.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 student.EnrollmentDate = DateTime.Now;
                 _personService.AddPerson(student);                
                 _studentService.AddStudent(student);
@@ -60,17 +59,16 @@ namespace ContosoWeb.Controllers
         // GET: Student/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_studentService.GetStudentById(id));
         }
 
         // POST: Student/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Student student)
         {
             try
             {
-                // TODO: Add update logic here
-
+                student.UpdatedDate = DateTime.Now;
                 return RedirectToAction("Index");
             }
             catch
