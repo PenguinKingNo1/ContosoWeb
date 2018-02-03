@@ -10,7 +10,7 @@ namespace ContosoWeb.Services
 {
     public class StudentService : IStudentService
     {
-        IStudentRepository _repository;
+        protected IStudentRepository _repository;
         public StudentService(IStudentRepository repository)
         {
             _repository = repository;
@@ -20,7 +20,7 @@ namespace ContosoWeb.Services
             _repository.Add(student);
         }
 
-        public IEnumerable<Student> GetAllStudents()
+        public virtual IEnumerable<Student> GetAllStudents()
         {
             return _repository.GetAll();
         }
@@ -36,15 +36,35 @@ namespace ContosoWeb.Services
             _repository.SaveChanges();
         }
 
-        public IEnumerable<Course> GetEnrolledCourses(int id)
+        public IEnumerable<Course> GetEnrolledCourses(int studentId)
         {
-            var enrollmentList = _repository.GetById(id).Enrollments;
-            var courseList = new List<Course>();
-            foreach (var enroll in enrollmentList)
+            try
             {
-                courseList.Add(enroll.Course);
+                Student person = _repository.GetById(studentId);
+                var enrollmentList = person.Enrollments;
+                var courseList = new List<Course>();
+                foreach (var enroll in enrollmentList)
+                {
+                    courseList.Add(enroll.Course);
+                }
+                return courseList;
             }
-            return courseList;
+            catch (Exception)
+            {
+
+                throw;
+            }          
+        }
+    }
+
+    public class StudentServiceEager : StudentService
+    {
+        public StudentServiceEager(IStudentRepository repository) : base(repository)
+        {
+        }
+        public override IEnumerable<Student> GetAllStudents()
+        {            
+            return _repository.EagerGetAll();
         }
     }
 

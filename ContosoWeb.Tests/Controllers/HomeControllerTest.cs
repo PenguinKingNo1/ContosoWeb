@@ -28,6 +28,7 @@ namespace ContosoWeb.Tests.Controllers
         [TestMethod]
         public void About()
         {
+            var hello = new { Text = "abc", Value = "edf" };
             // Arrange
             HomeController controller = new HomeController();
 

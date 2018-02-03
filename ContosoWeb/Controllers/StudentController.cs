@@ -46,7 +46,7 @@ namespace ContosoWeb.Controllers
         {
             try
             {
-                student.EnrollmentDate = DateTime.Now;
+                student.CreatedDate = DateTime.Now;
                 _personService.AddPerson(student);                
                 _studentService.AddStudent(student);
                 _personService.AddRole(student.Id, AuthorizeRole.StudentId);
@@ -91,8 +91,23 @@ namespace ContosoWeb.Controllers
         {
             try
             {
-                _studentService.DeleteStudent(_studentService.GetStudentById(student.Id));             
+                _studentService.DeleteStudent(_studentService.GetStudentById(student.Id));
                 return RedirectToAction("Index");
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        [RoleAuthorize(AuthorizeRole.Student)]
+        public ActionResult PersonalHome()
+        {
+            try
+            {
+                var studentInfo = System.Web.HttpContext.Current.User as ContosoWebPrincipal;
+                var studentId = studentInfo.PersonId;
+                return View(_studentService.GetEnrolledCourses(studentId));
             }
             catch
             {
@@ -100,14 +115,13 @@ namespace ContosoWeb.Controllers
             }
         }
 
-        public ActionResult PersonalHome()
+        [RoleAuthorize(AuthorizeRole.Instructor,AuthorizeRole.Administrator)]
+        public ActionResult StudentCourse()
         {
             try
             {
-                var studentInfo = System.Web.HttpContext.Current.User as ContosoWebPrincipal;
-                var studentId = studentInfo.PersonId;
-
-                return View(_studentService.GetEnrolledCourses(studentId));
+                var studentList = _studentService.GetAllStudents();
+                return View(studentList);
             }
             catch
             {

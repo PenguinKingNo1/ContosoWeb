@@ -8,15 +8,20 @@ using ContosoWeb.Services;
 using ContosoWeb.ViewModels;
 using Newtonsoft.Json;
 using System.Web.Security;
+using ContosoWeb.Infrastructure;
 
 namespace ContosoWeb.Controllers
 {
     public class PeopleController : Controller
     {
         private readonly IPersonService _personService;
-        public PeopleController(IPersonService personService)
+        private readonly IInstructorService _instructorService;
+        private readonly IStudentService _studentService;
+        public PeopleController(IPersonService personService, IInstructorService instructorService, IStudentService studentService)
         {
             _personService = personService;
+            _instructorService = instructorService;
+            _studentService = studentService;
         }
         // GET: People
         public ActionResult Index()
@@ -33,17 +38,35 @@ namespace ContosoWeb.Controllers
         // GET: People/Create
         public ActionResult Create()
         {
+            var roleList = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = AuthorizeRole.Instructor, Value = AuthorizeRole.InstructorId.ToString()},
+                new SelectListItem(){Text = AuthorizeRole.Student, Value = AuthorizeRole.StudentId.ToString()}
+            };
+            ViewBag.RoleId = roleList;
             return View();
         }
 
         // POST: People/Create
         [HttpPost]
-        public ActionResult Create(People person)
+        public ActionResult Create(People person,string RoleId)
         {
             try
             {
-                // TODO: Add insert logic here
-                _personService.AddPerson(person);
+                person.CreatedDate = DateTime.Now;
+                _personService.AddPerson(person); 
+                if (RoleId == AuthorizeRole.InstructorId.ToString())
+                {
+                    _instructorService.AddInstructor(new Instructor() { Id = person.Id});
+                    _personService.AddRole(person.Id, AuthorizeRole.InstructorId);
+                    return RedirectToAction("PersonalHome", "Instructor");
+                }
+                else if(RoleId == AuthorizeRole.StudentId.ToString())
+                {
+                    _studentService.AddStudent(new Student() { Id = person.Id});
+                    _personService.AddRole(person.Id, AuthorizeRole.StudentId);
+                    return RedirectToAction("PersonalHome","Student");
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -132,14 +155,18 @@ namespace ContosoWeb.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
             return View();
+        }
+
+        // GET: 
+        public ActionResult SignUp()
+        {
+            return RedirectToAction("Create");
         }
     }
 }

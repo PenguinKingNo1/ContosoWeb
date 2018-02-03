@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContosoWeb.Models.Common
 {
-    public class AuditableEntity : Entity, IAuditableEntity
+    public abstract class AuditableEntity : Entity, IAuditableEntity
     {
         public int? CreatedBy { get; set; }
         public int? UpdatedBy { get; set; }

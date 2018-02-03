@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContosoWeb.Models.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace ContosoWeb.Models
 {
@@ -13,6 +14,7 @@ namespace ContosoWeb.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public DateTime? Birthday { get; set; }
+        [Required]
         public string Email { get; set; }
         public string Phone { get; set; }
         public string AddressLine1 { get; set; }

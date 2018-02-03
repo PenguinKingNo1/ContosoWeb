@@ -28,16 +28,7 @@ namespace ContosoWeb.Controllers
         // GET: Course
         public ActionResult Index()
         {
-            //int x = 1;
-            //int y = 0;
-            //int z = x / y;
             return View(_service.GetAllCourses());
-        }
-
-        // GET: Course
-        public ActionResult Index(int id)
-        {
-            return View(_studentService.GetStudentById(id).Enrollments);
         }
 
         // GET: Course/Details/5
@@ -125,7 +116,7 @@ namespace ContosoWeb.Controllers
                 enrollment.CourseId = Convert.ToInt32(id);
                 enrollment.StudentId = student.PersonId;
                 _enrollmentService.AddEnrollment(enrollment);
-                return RedirectToAction("Index");
+                return RedirectToAction("PersonalHome","Student");
             }
             catch
             {

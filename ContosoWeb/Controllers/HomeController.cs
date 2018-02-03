@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContosoWeb.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,11 @@ namespace ContosoWeb.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var personInfo = System.Web.HttpContext.Current.User as ContosoWebPrincipal;
+            if(personInfo == null)
+                return View("Index", "~/Views/Shared/_Layout.cshtml");
+            ViewBag.UserName = personInfo.FirstName;
+            return View("Index", "~/Views/Shared/_LoginLayout.cshtml");
         }
 
         public ActionResult About()

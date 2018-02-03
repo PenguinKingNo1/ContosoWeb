@@ -77,7 +77,7 @@ namespace Contoso.App_Start
             kernel.Bind<IEnrollmentRepository>().To<EnrollmentRepository>();
 
             //Services
-            kernel.Bind<IStudentService>().To<StudentService>();
+            kernel.Bind<IStudentService>().To<StudentServiceEager>();
             kernel.Bind<IPersonService>().To<PersonService>();
             kernel.Bind<IInstructorService>().To<InstructorService>();
             kernel.Bind<IDepartmentService>().To<DepartmentService>();
